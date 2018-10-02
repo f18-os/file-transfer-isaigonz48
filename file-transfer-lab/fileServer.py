@@ -31,29 +31,31 @@ while True:
 
     from framedSock import framedSend, framedReceive
 
+    ##### Child forked
     if not os.fork():
-        print("child handling stuff form")
 
         totalFile = ""
-        newLineCounter = 0
         fileName = framedReceive(sock, debug)
-
+        #### makeNewLine is a flag for whether or not the line ends with '\n'
+        makeNewLine = 0
         while True:
     
             payload = framedReceive(sock, debug)
-            if newLineCounter == 1:
-                if debug: print("rec'd: ", payload)
-                totalFile += payload.decode()
-                if makeNewLine == 1:
-                    totalFile += '\n'
-                    newLineCounter = 0
-            else:
-                if not payload:
-                    break
-                if payload.decode() == "YES":
-                    makeNewLine = 1
-                newLineCounter = 1
+            if not payload:
+                break
+            ##### turn on makeNewLine flag and receive the line of the file
+            if payload.decode() == "YES":
+                makeNewLine = 1
+                payload = framedReceive(sock, debug)
 
+            if debug: print("rec'd: ", payload)
+            totalFile += payload.decode()
+            ##### append '\n' to end of the line
+            if makeNewLine == 1:
+                totalFile += '\n'
+                makeNewLine = 0
+
+        ##### in case file did not exist on client side
         if not fileName:
             sys.exit()
         file = open(("RECEIVED" + fileName.decode()), 'w')

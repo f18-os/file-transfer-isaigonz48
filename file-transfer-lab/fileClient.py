@@ -59,6 +59,7 @@ if s is None:
 os.write(1, ("Name of file: ").encode())
 fileName = os.read(0,1024)
 
+##### Will make sure that the file name doesn't contain new lines or spaces
 while (re.search('\n',fileName.decode()) != None):
     decodedName = fileName.decode()
     if decodedName == '':
@@ -68,19 +69,24 @@ while (re.search('\n',fileName.decode()) != None):
         fileName = fileName[1:]
     elif decodedName[-1] == ' ' or decodedName[-1] == '\n':
         fileName = fileName[:-1]
-        
+
 if fileName == '':
     os.write(2,("File does not exist\n").encode)
     sys.exit()
 
+##### Attempt to open file
 try:
     file = open(fileName.decode(),'r')
 except FileNotFoundError:
     os.write(2, ("File does not exist\n").encode())
     sys.exit()
 
+##### Sends the file name first so that server knows what to save as
 framedSend(s,fileName,debug)
 
+##### Will send file line by line
+##### Removes '\n' at end of every file line, and sends a 'YES' to server to
+##### signal that there will need to be a '\n' at the end of the line, this allows empty lines to be sent
 for line in file:
     if len(line) < 1:
         continue
