@@ -1,9 +1,6 @@
 #! /usr/bin/env python3
-
-# Echo client program
 import os, socket, sys, re
-
-sys.path.append("../lib")       # for params
+sys.path.append("../lib")
 import params
 
 from framedSock import framedSend, framedReceive
@@ -11,8 +8,8 @@ from framedSock import framedSend, framedReceive
 
 switchesVarDefaults = (
     (('-s', '--server'), 'server', "127.0.0.1:50001"),
-    (('-d', '--debug'), "debug", False), # boolean (set if present)
-    (('-?', '--usage'), "usage", False), # boolean (set if present)
+    (('-d', '--debug'), "debug", False),
+    (('-?', '--usage'), "usage", False),
     )
 
 
@@ -23,7 +20,6 @@ server, usage, debug  = paramMap["server"], paramMap["usage"], paramMap["debug"]
 
 if usage:
     params.usage()
-
 
 try:
     serverHost, serverPort = re.split(":", server)
