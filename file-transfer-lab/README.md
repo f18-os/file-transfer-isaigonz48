@@ -1,9 +1,9 @@
-#Sending/Receiving Files Lab
+# Sending/Receiving Files Lab
 
 * fileClient.py will ask user for input of the name of the file that you want to send
 
 * fileServer.py will receive the file and put its contents into a file with the sent files names
-* fileServer.py adds a number to the file name if the original name already exosted
+  * fileServer.py adds a number to the file name if the original name already exosted
 
 * fileServer.py supports multiple clients
 
