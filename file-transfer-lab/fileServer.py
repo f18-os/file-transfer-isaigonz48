@@ -36,30 +36,26 @@ while True:
 
         totalFile = ""
         fileName = framedReceive(sock, debug)
-        #### makeNewLine is a flag for whether or not the line ends with '\n'
-        makeNewLine = 0
+
         while True:
     
             payload = framedReceive(sock, debug)
             if not payload:
                 break
-            ##### turn on makeNewLine flag and receive the line of the file
-            if payload.decode() == "YES":
-                makeNewLine = 1
-                payload = framedReceive(sock, debug)
-
+            
             if debug: print("rec'd: ", payload)
             totalFile += payload.decode()
-            ##### append '\n' to end of the line
-            if makeNewLine == 1:
-                totalFile += '\n'
-                makeNewLine = 0
-
+            
         ##### in case file did not exist on client side
         if not fileName:
             sys.exit()
-        file = open(("RECEIVED" + fileName.decode()), 'w')
 
+        if (os.environ['PATH'] + "Re" + fileName.decode()):
+            print("File already exists")
+            file = open(("Re" + fileName.decode()), 'w')
+
+        else:
+            file = open(fileName.decode(), 'w')
         file.write(totalFile)
         
         file.close()

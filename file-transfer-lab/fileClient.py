@@ -84,15 +84,15 @@ except FileNotFoundError:
 ##### Sends the file name first so that server knows what to save as
 framedSend(s,fileName,debug)
 
-##### Will send file line by line
-##### Removes '\n' at end of every file line, and sends a 'YES' to server to
-##### signal that there will need to be a '\n' at the end of the line, this allows empty lines to be sent
-for line in file:
-    if len(line) < 1:
-        continue
-    if line[-1] == '\n':
-        line = line[:-1]
-        framedSend(s,("YES").encode(),debug)
-    framedSend(s,line.encode(), debug)
-    
+print (os.environ['PATH'])
+##### Will send file 100 bytes at a time
+file = open(fileName,'r')
+while True:
+    fileText = file.read(100)
+    ##### breaks loop at end of file
+    if not fileText:
+        break
+    #print("sending at most 100 bytes")
+    framedSend(s, fileText.encode(), debug)
+
 file.close()
