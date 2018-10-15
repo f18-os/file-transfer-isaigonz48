@@ -80,7 +80,7 @@ except FileNotFoundError:
 ##### Sends the file name first so that server knows what to save as
 framedSend(s,fileName,debug)
 
-print (os.environ['PATH'])
+#print (os.environ['PATH'])
 ##### Will send file 100 bytes at a time
 file = open(fileName,'r')
 while True:

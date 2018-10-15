@@ -56,7 +56,7 @@ while True:
         while True:
             ##### got this if statement from "Harwee" on stackoverflow
             if decodedName in filesInDir:
-                print ("reapeat")
+                #print ("reapeat")
                 repeatCounter += 1
                 splitName = re.split("\.", decodedName)
                 if (repeatCounter > 1):
